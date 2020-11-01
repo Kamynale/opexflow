@@ -13,6 +13,7 @@ import AppLocale from './lang';
 import NotificationContainer from './components/common/react-notifications/NotificationContainer';
 import { isMultiColorActive } from './constants/defaultValues';
 import { getDirection } from './helpers/Utils';
+import ExchangeRate from './components/pages/ExchangeRate';
 
 const ViewMain = React.lazy(() => import(/* webpackChunkName: "views" */ './views'));
 const ViewApp = React.lazy(() => import(/* webpackChunkName: "views-app" */ './views/app'));
@@ -78,6 +79,10 @@ class App extends Component {
                                       exact
                                       render={props => <ViewError {...props} />}
                                     />
+                                  <Route
+                                      path="/exchangerate"
+                                      render={props => <ExchangeRate />}
+                                  />
                                   <Route
                                       path="/"
                                       exact
