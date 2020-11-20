@@ -9,6 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const config = require('./config');
 const params = require('express-route-params');
+import loader from './loader';
 
 const app = express();
 params(express);
@@ -328,7 +329,45 @@ function ensureAuthenticated(req, res, next) {
     return next();
 }
 
-// Transaction
+// SSR
+
+app.use(compression());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(morgan('dev'));
+app.use(cookieParser());
+
+// Set up homepage, static assets, and capture everything else
+app.use(express.Router().get('/', loader));
+app.use(express.static(path.resolve(__dirname, '../build')));
+app.use(loader);
+
+// We tell React Loadable to load all required assets and start listening - ROCK AND ROLL!
+Loadable.preloadAll().then(() => {
+    app.listen(PORT, console.log(`App listening on port ${PORT}!`));
+});
+
+// Handle the bugs somehow
+app.on('error', error => {
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
+
+    const bind = typeof PORT === 'string' ? 'Pipe ' + PORT : 'Port ' + PORT;
+
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+});
 
 
 app.listen(3001);
