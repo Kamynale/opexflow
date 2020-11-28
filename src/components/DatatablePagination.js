@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {
     Pagination, PaginationItem, PaginationLink,
     UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem,
@@ -22,8 +22,8 @@ export default class DataTablePagination extends Component {
         };
     }
 
-    static getDerivedStateFromProps(props, state) {
-        return { page: props.page };
+    componentWillReceiveProps(nextProps) {
+        this.setState({ page: nextProps.page });
     }
 
     getSafePage(page) {

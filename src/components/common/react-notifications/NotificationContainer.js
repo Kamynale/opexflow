@@ -4,11 +4,6 @@ import NotificationManager from './NotificationManager';
 import Notifications from './Notifications';
 
 class NotificationContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        NotificationManager.addChangeListener(this.handleStoreChange);
-    }
-
   static propTypes = {
       enterTimeout: PropTypes.number,
       leaveTimeout: PropTypes.number,
@@ -21,6 +16,10 @@ class NotificationContainer extends React.Component {
 
   state = {
       notifications: [],
+  };
+
+  UNSAFE_componentWillMount = () => {
+      NotificationManager.addChangeListener(this.handleStoreChange);
   };
 
   componentWillUnmount = () => {

@@ -22,7 +22,7 @@ const RadialProgressCard = ({
           <div className="progress-bar-circle">
               <CircularProgressbar
                   strokeWidth={4}
-                  value={percent}
+                  percentage={percent}
                   text={`${percent}%`}
                 />
             </div>

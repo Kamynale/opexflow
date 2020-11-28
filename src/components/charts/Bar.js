@@ -4,8 +4,7 @@ import ChartComponent, { Chart } from 'react-chartjs-2';
 import { barChartOptions } from './config';
 
 export default class Bar extends React.Component {
-    constructor(props) {
-        super(props);
+    componentWillMount() {
         if (this.props.shadow) {
             Chart.defaults.barWithShadow = Chart.defaults.bar;
             Chart.controllers.barWithShadow = Chart.controllers.bar.extend({

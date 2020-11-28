@@ -56,7 +56,7 @@ export default class ApplicationMenu extends React.Component {
                     className="app-menu-button d-inline-block d-xl-none"
                     onClick={this.toggle}
               >
-                    <i className="simple-icon-options" />
+                    <i className="simple-icon-refresh" />
               </NavLink>
           </div>
         );

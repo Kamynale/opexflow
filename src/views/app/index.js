@@ -1,14 +1,17 @@
-import React, { Component, Suspense } from 'react';
+import React, { Component } from 'react';
 import {
     Route, withRouter, Switch, Redirect,
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import AppLayout from '../../layout/AppLayout';
-
-const Gogo = React.lazy(() => import(/* webpackChunkName: "viwes-gogo" */ './gogo'));
-const SecondMenu = React.lazy(() => import(/* webpackChunkName: "viwes-second-menu" */ './second-menu'));
-const BlankPage = React.lazy(() => import(/* webpackChunkName: "viwes-blank-page" */ './blank-page'));
+import dashboards from './dashboards';
+import bots from './bots';
+import pages from './pages';
+import applications from './applications';
+import ui from './ui';
+import menu from './menu';
+import blankPage from './blank-page';
 
 class App extends Component {
     render() {
@@ -16,26 +19,17 @@ class App extends Component {
 
         return (
             <AppLayout>
-                <div className="dashboard-wrapper">
-                    <Suspense fallback={<div className="loading" />}>
-                        <Switch>
-                            <Redirect exact from={`${match.url}/`} to={`${match.url}/gogo`} />
-                            <Route
-                                path={`${match.url}/gogo`}
-                                render={props => <Gogo {...props} />}
-                          />
-                            <Route
-                                path={`${match.url}/second-menu`}
-                                render={props => <SecondMenu {...props} />}
-                          />
-                            <Route
-                                path={`${match.url}/blank-page`}
-                                render={props => <BlankPage {...props} />}
-                          />
-                            <Redirect to="/error" />
-                      </Switch>
-                  </Suspense>
-              </div>
+                <Switch>
+                    <Redirect exact from={`${match.url}/`} to={`${match.url}/bots`} />
+                    <Route path={`${match.url}/dashboards`} component={dashboards} />
+                    <Route path={`${match.url}/bots`} component={bots} />
+                    <Route path={`${match.url}/applications`} component={applications} />
+                    <Route path={`${match.url}/pages`} component={pages} />
+                    <Route path={`${match.url}/ui`} component={ui} />
+                    <Route path={`${match.url}/menu`} component={menu} />
+                    <Route path={`${match.url}/blank-page`} component={blankPage} />
+                    <Redirect to="/error" />
+              </Switch>
           </AppLayout>
         );
     }

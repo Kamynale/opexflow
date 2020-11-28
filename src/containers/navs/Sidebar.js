@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
-import { Nav, NavItem, Collapse } from 'reactstrap';
+import { Nav, NavItem, UncontrolledCollapse } from 'reactstrap';
 import { NavLink, withRouter } from 'react-router-dom';
 import classnames from 'classnames';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -23,7 +23,6 @@ class Sidebar extends Component {
         this.state = {
             selectedParentMenu: '',
             viewingParentMenu: '',
-            collapsedMenus: [],
         };
     }
 
@@ -166,17 +165,7 @@ class Sidebar extends Component {
           oldli.classList.remove('active');
       }
 
-      const oldliSub = document.querySelector('.third-level-menu  li.active');
-      if (oldliSub != null) {
-          oldliSub.classList.remove('active');
-      }
-
       /* set selected parent menu */
-      const selectedSublink = document.querySelector('.third-level-menu  a.active');
-      if (selectedSublink != null) {
-          selectedSublink.parentElement.classList.add('active');
-      }
-
       const selectedlink = document.querySelector('.sub-menu  a.active');
       if (selectedlink != null) {
           selectedlink.parentElement.classList.add('active');
@@ -296,29 +285,8 @@ class Sidebar extends Component {
       }
   };
 
-  toggleMenuCollapse = (e, menuKey) => {
-      e.preventDefault();
-
-      const { collapsedMenus } = this.state;
-      if (collapsedMenus.indexOf(menuKey) > -1) {
-          this.setState({
-              collapsedMenus: collapsedMenus.filter(x => x !== menuKey),
-          });
-      } else {
-          collapsedMenus.push(menuKey);
-          this.setState({
-              collapsedMenus,
-          });
-      }
-      return false;
-  };
-
   render() {
-      const {
-          selectedParentMenu,
-          viewingParentMenu,
-          collapsedMenus,
-      } = this.state;
+      const { selectedParentMenu, viewingParentMenu } = this.state;
       return (
           <div className="sidebar">
               <div className="main-menu">
@@ -385,14 +353,7 @@ class Sidebar extends Component {
                   >
                     {item.subs &&
                         item.subs.map((sub, index) => (
-                          <NavItem
-                                key={`${item.id}_${index}`}
-                                className={`${
-                                sub.subs && sub.subs.length > 0 ?
-                                    'has-sub-item' :
-                                    ''
-                              }`}
-                            >
+                          <NavItem key={`${item.id}_${index}`}>
                                 {sub.newWindow ? (
                                     <a
                                         href={sub.to}
@@ -406,31 +367,16 @@ class Sidebar extends Component {
                                 ) : sub.subs && sub.subs.length > 0 ? (
                                     <>
                                     <NavLink
-                                          className={`rotate-arrow-icon opacity-50 ${
-                                      collapsedMenus.indexOf(
-                                        `${item.id}_${index}`,
-                                      ) === -1 ?
-                                          '' :
-                                          'collapsed'
-                                    }`}
                                           to={sub.to}
                                           id={`${item.id}_${index}`}
-                                          onClick={e => this.toggleMenuCollapse(
-                                                e,
-                                        `${item.id}_${index}`,
-                                            )}
                                         >
-                                          <i className="simple-icon-arrow-down" />
+                                          <i className={sub.icon} />
                                             {' '}
                                           <IntlMessages id={sub.label} />
                                         </NavLink>
 
-                                    <Collapse
-                                          isOpen={
-                                                collapsedMenus.indexOf(
-                                        `${item.id}_${index}`,
-                                                ) === -1
-                                            }
+                                    <UncontrolledCollapse
+                                          toggler={`#${item.id}_${index}`}
                                         >
                                           <Nav className="third-level-menu">
                                               {sub.subs.map((thirdSub, thirdIndex) => (
@@ -463,7 +409,7 @@ class Sidebar extends Component {
                                                 </NavItem>
                                                 ))}
                                             </Nav>
-                                        </Collapse>
+                                        </UncontrolledCollapse>
                                   </>
                                 ) : (
                                     <NavLink to={sub.to}>

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import ChartComponent, { Chart } from 'react-chartjs-2';
 
 import { smallLineChartOptions } from './config';
@@ -23,6 +23,9 @@ export default class SmallLine extends React.Component {
             currentValue: '',
             currentLabel: '',
         };
+    }
+
+    componentWillMount() {
         Chart.defaults.lineWithLine = Chart.defaults.line;
         Chart.controllers.lineWithLine = Chart.controllers.line.extend({
             draw(ease) {

@@ -5,7 +5,7 @@ export default class ReactAutoSuggest extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: this.props.value,
+            value: '',
             suggestions: [],
             data: this.props.data || [],
         };

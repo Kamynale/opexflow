@@ -13,7 +13,6 @@ const TodoListItem = ({ item, handleCheckChange, isSelected }) => (
               <CardBody className="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
                   <NavLink
                       to="#"
-                        location={{}}
                       id={`toggler${item.id}`}
                       className="list-item-heading mb-0 truncate w-40 w-xs-100  mb-1 mt-1"
                     >
@@ -38,7 +37,7 @@ const TodoListItem = ({ item, handleCheckChange, isSelected }) => (
                         </Badge>
                     </div>
                 </CardBody>
-              <div className="custom-control custom-checkbox pl-1 align-self-center mr-4">
+              <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
                   <CustomInput
                       className="itemCheck mb-0"
                       type="checkbox"

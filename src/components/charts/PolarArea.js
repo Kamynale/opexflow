@@ -4,8 +4,7 @@ import ChartComponent, { Chart } from 'react-chartjs-2';
 import { polarAreaChartOptions } from './config';
 
 export default class PolarArea extends React.Component {
-    constructor(props) {
-        super(props);
+    componentWillMount() {
         if (this.props.shadow) {
             Chart.defaults.polarWithShadow = Chart.defaults.polarArea;
             Chart.controllers.polarWithShadow = Chart.controllers.polarArea.extend({

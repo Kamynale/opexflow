@@ -36,7 +36,7 @@ const SurveyListItem = ({ item, handleCheckChange, isSelected }) => (
                         </Badge>
                     </div>
                 </CardBody>
-              <div className="custom-control custom-checkbox pl-1 align-self-center mr-4">
+              <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
                   <CustomInput
                       className="itemCheck mb-0"
                       type="checkbox"

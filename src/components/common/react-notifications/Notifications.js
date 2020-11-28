@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { TransitionGroup as CSSTransitionGroup } from 'react-transition-group';
 import classnames from 'classnames';
 import Notification from './Notification';
 
@@ -34,29 +34,27 @@ class Notifications extends React.Component {
       });
       return (
           <div className={className}>
-              <TransitionGroup>
+              <CSSTransitionGroup
+                  transitionname="notification"
+                  transitionentertimeout={enterTimeout}
+                  transitionleavetimeout={leaveTimeout}
+            >
                   {notifications.map(notification => {
                       const key = notification.id || new Date().getTime();
                       return (
-                          <CSSTransition
-                              classNames="notification"
+                          <Notification
                               key={key}
-                              timeout={{ exit: leaveTimeout, enter: enterTimeout }}
-                        >
-                              <Notification
-                                  key={key}
-                                  type={notification.type}
-                                  title={notification.title}
-                                  message={notification.message}
-                                  timeOut={notification.timeOut}
-                                  onClick={notification.onClick}
-                                  onRequestHide={this.handleRequestHide(notification)}
-                                  customClassName={notification.customClassName}
-                            />
-                        </CSSTransition>
+                              type={notification.type}
+                              title={notification.title}
+                              message={notification.message}
+                              timeOut={notification.timeOut}
+                              onClick={notification.onClick}
+                              onRequestHide={this.handleRequestHide(notification)}
+                              customClassName={notification.customClassName}
+                        />
                       );
                   })}
-            </TransitionGroup>
+            </CSSTransitionGroup>
         </div>
       );
   }

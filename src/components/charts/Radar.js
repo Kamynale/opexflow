@@ -4,8 +4,7 @@ import ChartComponent, { Chart } from 'react-chartjs-2';
 import { radarChartOptions } from './config';
 
 export default class Radar extends React.Component {
-    constructor(props) {
-        super(props);
+    componentWillMount() {
         if (this.props.shadow) {
             Chart.defaults.radarWithShadow = Chart.defaults.radar;
             Chart.controllers.radarWithShadow = Chart.controllers.radar.extend({
